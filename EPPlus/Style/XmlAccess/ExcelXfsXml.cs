@@ -854,7 +854,10 @@ namespace OfficeOpenXml.Style.XmlAccess
             if(_borderId >= 0) SetXmlNodeString("@borderId", _styles.Borders[_borderId].newID.ToString());
             if(_horizontalAlignment != ExcelHorizontalAlignment.General) this.SetXmlNodeString(horizontalAlignPath, SetAlignString(_horizontalAlignment));
             if (!isCellStyleXsf && _xfID > int.MinValue && _styles.CellStyleXfs.Count>0)
-                SetXmlNodeString("@xfId", _styles.CellStyleXfs[_xfID].newID.ToString());
+            {
+                var newID = _styles.CellStyleXfs[_xfID].newID;
+                SetXmlNodeString("@xfId", newID > 0 ? newID.ToString() : "0");
+            }
 
             if (_verticalAlignment != ExcelVerticalAlignment.Bottom) this.SetXmlNodeString(verticalAlignPath, SetAlignString(_verticalAlignment));
             if(_wrapText) this.SetXmlNodeString(wrapTextPath, "1");
